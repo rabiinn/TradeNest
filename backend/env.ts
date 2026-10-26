@@ -46,7 +46,6 @@ let env: Env
 
 try {
   env = envSchema.parse(process.env)
-  console.log(env)
 } catch (error) {
   if (error instanceof ZodError) {
     // Print out the error on console
