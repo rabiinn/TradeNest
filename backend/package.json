@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --watch src/index.ts"
+    "start": "node --watch src/index.ts",
+    "test:db": "node src/db/testConnection.ts"
   },
   "keywords": [],
   "author": "",
@@ -22,9 +23,11 @@
     "jose": "^6.2.13",
     "morgan": "^1.12.1",
     "multer": "^2.5.0",
+    "pg": "^8.23.1",
     "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@epic-web/remember": "^1.1.0",
     "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
