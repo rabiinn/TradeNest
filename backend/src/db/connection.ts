@@ -18,5 +18,4 @@ if (isProd()) {
 } else {
   client = remember('dbPool', () => createPool())
 }
-
-export { client }
+export const db = drizzle({ client })
