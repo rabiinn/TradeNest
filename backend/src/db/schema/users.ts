@@ -1,5 +1,5 @@
-import { pgTable, uuid, text, timestamp, index } from 'drizzle-orm/pg-core'
-import { createdAt, id } from './helpers.ts'
+import { pgTable, text, timestamp, index } from 'drizzle-orm/pg-core'
+import { createdAt, fk, id } from './helpers.ts'
 export const users = pgTable('users', {
   id: id(),
   email: text('email').notNull().unique(),
@@ -14,7 +14,7 @@ export const refreshTokens = pgTable(
   'refresh_token',
   {
     id: id(),
-    userId: id().references(() => users.id, {
+    userId: fk('user_id').references(() => users.id, {
       onDelete: 'cascade',
     }),
     tokenHash: text('token_hash').notNull().unique(),

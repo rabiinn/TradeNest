@@ -5,6 +5,8 @@ export const id = () =>
   uuid('id')
     .primaryKey()
     .default(sql`uuidv7()`)
+
+export const fk = (name: string) => uuid(name)
 export const createdAt = () =>
   timestamp('created_at', { withTimezone: true }).defaultNow().notNull()
 
