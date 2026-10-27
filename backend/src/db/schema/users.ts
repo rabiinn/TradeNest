@@ -1,17 +1,18 @@
-import { pgTable, text, timestamp, index } from 'drizzle-orm/pg-core'
+import { pgTable, text, timestamp, index, pgEnum } from 'drizzle-orm/pg-core'
 import { createdAt, fk, id } from './helpers.ts'
+import { userStatus } from './enums.ts'
 export const users = pgTable('users', {
   id: id(),
   email: text('email').notNull().unique(),
   passwordHash: text('password_hash').notNull(),
   firstName: text('first_name').notNull(),
   lastName: text('last_name').notNull(),
-  status: text('status').notNull().default('active'),
+  status: userStatus('user_status').notNull().default('ACTIVE'),
   createdAt: createdAt(),
 })
 
 export const refreshTokens = pgTable(
-  'refresh_token',
+  'refresh_tokens',
   {
     id: id(),
     userId: fk('user_id').references(() => users.id, {

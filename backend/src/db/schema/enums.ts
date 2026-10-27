@@ -1,4 +1,5 @@
 import { pgEnum } from 'drizzle-orm/pg-core'
+export const userStatus = pgEnum('user_status', ['ACTIVE', 'DISABLED'])
 export const sideEnum = pgEnum('side', ['BUY', 'SELL'])
 export const orderTypeEnum = pgEnum('order_type', [
   'MARKET',
