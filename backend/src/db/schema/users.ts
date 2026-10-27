@@ -11,6 +11,8 @@ export const users = pgTable('users', {
   createdAt: createdAt(),
 })
 
+export type User = typeof users.$inferSelect
+
 export const refreshTokens = pgTable(
   'refresh_tokens',
   {
