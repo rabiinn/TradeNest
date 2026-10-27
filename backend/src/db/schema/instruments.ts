@@ -36,7 +36,7 @@ export const instruments = pgTable(
 export const candles = pgTable(
   'candles',
   {
-    instrumentId: id()
+    instrumentId: fk('instrument_id')
       .notNull()
       .references(() => instruments.id, { onDelete: 'restrict' }),
     interval: intervalEnum('interval').notNull(),
