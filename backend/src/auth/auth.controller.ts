@@ -11,7 +11,3 @@ export const register = async (req: Request, res: Response) => {
   })
   res.status(200).json({ registeredUser })
 }
-
-export const sayHello = async (req: Request, res: Response) => {
-  res.status(200).json({ message: 'Hello from auth routes' })
-}

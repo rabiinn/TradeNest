@@ -1,6 +1,7 @@
-import { pgTable, text, timestamp, index, pgEnum } from 'drizzle-orm/pg-core'
+import { pgTable, text, timestamp, index, uuid } from 'drizzle-orm/pg-core'
 import { createdAt, fk, id } from './helpers.ts'
 import { userStatus } from './enums.ts'
+import { sql } from 'drizzle-orm'
 export const users = pgTable('users', {
   id: id(),
   email: text('email').notNull().unique(),
@@ -20,6 +21,7 @@ export const refreshTokens = pgTable(
     userId: fk('user_id').references(() => users.id, {
       onDelete: 'cascade',
     }),
+    familyId: uuid('family_id').default(sql`uuidv7()`),
     tokenHash: text('token_hash').notNull().unique(),
     userAgent: text('user_agent'),
     expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
