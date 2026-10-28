@@ -2,6 +2,7 @@ import express from 'express'
 import helmet from 'helmet'
 import type { Request, Response } from 'express'
 import cors from 'cors'
+import authRouter from './auth/auth.routes.ts'
 const app = express()
 
 app.use(helmet())
@@ -17,6 +18,8 @@ app.get('/health', (req: Request, res: Response) => {
     service: 'TradeNest API',
   })
 })
+
+app.use('/api/auth', authRouter)
 
 app.use((req: Request, res: Response) => {
   res.status(404).json({

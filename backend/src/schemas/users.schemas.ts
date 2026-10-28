@@ -1,5 +1,4 @@
 import z from 'zod'
-import { createdAt } from '../db/schema/helpers'
 
 export const USER_STATUSES = ['ACTIVE', 'DISABLED'] as const
 export const registerBodySchema = z.object({
