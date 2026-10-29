@@ -17,7 +17,7 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
     return res.status(400).json({
       error: 'Validation failed',
       code: 'ZOD_VALIDATION_FAILED',
-      detaails: err.issues.map((e) => ({
+      details: err.issues.map((e) => ({
         field: e.path.join('.'),
         message: e.message,
       })),

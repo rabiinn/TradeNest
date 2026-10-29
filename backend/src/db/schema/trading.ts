@@ -16,7 +16,7 @@ import {
   sideEnum,
   timeInForceEnum,
   orderStatusEnum,
-} from './enums'
+} from './enums.ts'
 export const orders = pgTable(
   'orders',
   {

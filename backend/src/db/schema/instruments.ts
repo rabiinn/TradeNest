@@ -11,7 +11,7 @@ import {
 } from 'drizzle-orm/pg-core'
 import { sql } from 'drizzle-orm'
 import { id, cents, fk } from './helpers.ts'
-import { instrumentTypeEnum, intervalEnum } from './enums'
+import { instrumentTypeEnum, intervalEnum } from './enums.ts'
 import { users } from './users.ts'
 
 export const instruments = pgTable(
