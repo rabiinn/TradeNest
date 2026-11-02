@@ -3,9 +3,11 @@ import { db } from '../db/connection.ts'
 import { users } from '../db/schema/users.ts'
 import { eq } from 'drizzle-orm'
 import { ConflictError } from '../errors/ConflictError.ts'
-import { hashPassword } from '../utils/password.ts'
+import { NotFoundError } from '../errors/NotFoundError.ts'
+import { hashPassword, verifyPassword } from '../utils/password.ts'
 import { generateToken, verifyToken } from '../utils/jwt.ts'
 import { toUserResponse } from './users.mapper.ts'
+import { UnauthorizedError } from '../errors/UnauthorizedError.ts'
 
 export const registerUser = async (credentials: RegisterInput) => {
   const [existingUser] = await db
@@ -33,10 +35,21 @@ export async function issueTokens(
     sessionStartedAt?: Date
   },
 ) {}
+
 export const loginUser = async (credentials: LoginInput) => {
   const [user] = await db
     .select()
     .from(users)
     .where(eq(users.email, credentials.email))
-  console.log(user)
+  if (!user) {
+    throw new NotFoundError('User not found')
+  }
+
+  const passwordMatches = await verifyPassword(
+    credentials.password,
+    user.passwordHash,
+  )
+  if (!passwordMatches) {
+    throw new UnauthorizedError('Email or password is wrong')
+  }
 }

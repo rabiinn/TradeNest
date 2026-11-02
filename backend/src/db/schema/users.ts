@@ -21,7 +21,9 @@ export const refreshTokens = pgTable(
     userId: fk('user_id').references(() => users.id, {
       onDelete: 'cascade',
     }),
-    familyId: uuid('family_id').default(sql`uuidv7()`),
+    familyId: uuid('family_id')
+      .notNull()
+      .default(sql`uuidv7()`),
     tokenHash: text('token_hash').notNull().unique(),
     userAgent: text('user_agent'),
     expiresAt: timestamp('expires_at', { withTimezone: true }).notNull(),
