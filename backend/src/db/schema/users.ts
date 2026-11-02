@@ -18,9 +18,11 @@ export const refreshTokens = pgTable(
   'refresh_tokens',
   {
     id: id(),
-    userId: fk('user_id').references(() => users.id, {
-      onDelete: 'cascade',
-    }),
+    userId: fk('user_id')
+      .notNull()
+      .references(() => users.id, {
+        onDelete: 'cascade',
+      }),
     familyId: uuid('family_id')
       .notNull()
       .default(sql`uuidv7()`),
@@ -30,5 +32,8 @@ export const refreshTokens = pgTable(
     revokedAt: timestamp('revoked_at', { withTimezone: true }),
     createdAt: createdAt(),
   },
-  (table) => [index('refresh_tokens_user_idx').on(table.userId)],
+  (table) => [
+    index('refresh_tokens_user_idx').on(table.userId),
+    index('refresh_tokens_family_idx').on(table.familyId),
+  ],
 )

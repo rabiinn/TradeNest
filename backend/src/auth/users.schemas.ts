@@ -15,6 +15,7 @@ export const registerSchema = z.object({
 export const loginSchema = z.object({
   email: z.email(),
   password: z.string().min(1).max(128),
+  userAgent: z.string().optional(),
 })
 
 export const userResponseSchema = z.object({
@@ -29,3 +30,8 @@ export const userResponseSchema = z.object({
 export type RegisterInput = z.infer<typeof registerSchema>
 export type LoginInput = z.infer<typeof loginSchema>
 export type UserResponse = z.infer<typeof userResponseSchema>
+
+export type LoginResponse = {
+  user: UserResponse
+  accessToken: string
+}
