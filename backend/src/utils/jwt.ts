@@ -1,4 +1,4 @@
-import { createSecretKey } from 'crypto'
+import { createSecretKey } from 'node:crypto'
 import { env } from '../../env.ts'
 import { jwtVerify, SignJWT, type JWTPayload } from 'jose'
 import z from 'zod'

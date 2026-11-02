@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express'
-import { registerUser } from './auth.service.ts'
+import { loginUser, registerUser } from './auth.service.ts'
 
 export const register = async (req: Request, res: Response) => {
   const registeredUser = await registerUser({
@@ -10,4 +10,13 @@ export const register = async (req: Request, res: Response) => {
     status: 'ACTIVE',
   })
   res.status(200).json({ registeredUser })
+}
+
+export const login = async (req: Request, res: Response) => {
+  const user = await loginUser({
+    email: 'john.doe@example.com',
+    password: 'helllo',
+  })
+
+  res.status(200).json({ message: 'Okay' })
 }

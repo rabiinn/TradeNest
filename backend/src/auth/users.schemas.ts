@@ -1,17 +1,20 @@
 import z from 'zod'
 
 export const USER_STATUSES = ['ACTIVE', 'DISABLED'] as const
-export const registerBodySchema = z.object({
+export const registerSchema = z.object({
   firstName: z.string(),
   lastName: z.string(),
-  email: z.string(),
-  password: z.string(),
+  email: z.email().trim().toLowerCase().max(254),
+  password: z
+    .string()
+    .min(10, 'Password must be at least 10 character')
+    .max(128),
   status: z.enum(USER_STATUSES),
 })
 
-export const loginUserSchema = z.object({
-  email: z.string(),
-  password: z.string(),
+export const loginSchema = z.object({
+  email: z.email(),
+  password: z.string().min(1).max(128),
 })
 
 export const userResponseSchema = z.object({
@@ -23,5 +26,6 @@ export const userResponseSchema = z.object({
   createdAt: z.string(),
 })
 
-export type RegisterBody = z.infer<typeof registerBodySchema>
+export type RegisterInput = z.infer<typeof registerSchema>
+export type LoginInput = z.infer<typeof loginSchema>
 export type UserResponse = z.infer<typeof userResponseSchema>
