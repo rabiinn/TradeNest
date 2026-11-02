@@ -9,7 +9,7 @@ export const registerSchema = z.object({
     .string()
     .min(10, 'Password must be at least 10 character')
     .max(128),
-  status: z.enum(USER_STATUSES),
+  status: z.enum(USER_STATUSES).optional(),
 })
 
 export const loginSchema = z.object({

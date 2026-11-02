@@ -1,22 +1,20 @@
 import type { Request, Response } from 'express'
-import { loginUser, registerUser } from './auth.service.ts'
+import { loginUser, refreshSession, registerUser } from './auth.service.ts'
 
 export const register = async (req: Request, res: Response) => {
-  const registeredUser = await registerUser({
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john.doe@example.com',
-    password: 'Password123!',
-    status: 'ACTIVE',
+  const result = await registerUser(req.body)
+  res.status(201).json({
+    message: 'User registered',
+    ...result,
   })
-  res.status(200).json({ registeredUser })
 }
 
 export const login = async (req: Request, res: Response) => {
-  const user = await loginUser({
-    email: 'john.doe@example.com',
-    password: 'helllo',
-  })
+  const { user, accessToken } = await loginUser(req.body)
+  res.status(201).json({ message: 'User logged in', user, accessToken })
+}
 
-  res.status(200).json({ message: 'Okay' })
+export const refresh = async (req: Request, res: Response) => {
+  const result = await refreshSession('token', 'agent')
+  res.status(200).json({ message: 'Refreshed ', ...result })
 }

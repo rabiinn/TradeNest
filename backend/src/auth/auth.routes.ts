@@ -1,8 +1,9 @@
 import { Router } from 'express'
-import { login, register } from './auth.controller.ts'
-
+import { login, refresh, register } from './auth.controller.ts'
+import { validateBody } from '../middleware/validationMiddleware.ts'
+import { loginSchema, registerSchema } from './users.schemas.ts'
 const authRouter = Router()
-
-authRouter.get('/register', register)
-authRouter.get('/login', login)
+authRouter.post('/register', validateBody(registerSchema), register)
+authRouter.post('/login', validateBody(loginSchema), login)
+authRouter.post('/refresh', refresh)
 export default authRouter

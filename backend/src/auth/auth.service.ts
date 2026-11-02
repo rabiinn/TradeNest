@@ -38,10 +38,9 @@ export async function issueTokens(
 ) {}
 
 export const loginUser = async (credentials: LoginInput) => {
-  const [user] = await db
-    .select()
-    .from(users)
-    .where(eq(users.email, credentials.email))
+  const user = await db.query.users.findFirst({
+    where: eq(users.email, credentials.email),
+  })
   if (!user) {
     throw new NotFoundError('User not found')
   }
@@ -64,7 +63,7 @@ export const loginUser = async (credentials: LoginInput) => {
     expiresAt: refreshToken.expiresAt,
   })
 
-  return { user, accessToken, refreshToken }
+  return { user: toUserResponse(user), accessToken, refreshToken }
 }
 
 type Transaction = Parameters<Parameters<typeof db.transaction>[0]>[0]
